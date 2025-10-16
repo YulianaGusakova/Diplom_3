@@ -21,15 +21,34 @@ public class RegistrationPage {
     private final By errorMessageText = By.xpath("//div[@class='input__container']//p[text() = 'Некорректный пароль']");
     private final String expectedHeader = "Некорректный пароль";
 
-    @Step("Очистка содержимого и заполнение полей формы Регистрации: имя, email, пароль. Клик по кнопке Зарегистрироваться")
-    public void fillInRegistrationDataFields(User user) {
+    @Step("Заполнение поля Имя в форме регистрации")
+    public void fillInNameField(String name) {
         driver.findElement(registratiomFormNameField).clear();
-        driver.findElement(registratiomFormNameField).sendKeys(user.getName());
+        driver.findElement(registratiomFormNameField).sendKeys(name);
+    }
+
+    @Step("Заполнение поля Email в форме регистрации")
+    public void fillInEmailField(String email) {
         driver.findElement(registratiomFormEmailField).clear();
-        driver.findElement(registratiomFormEmailField).sendKeys(user.getEmail());
+        driver.findElement(registratiomFormEmailField).sendKeys(email);
+    }
+    @Step("Заполнение поля Пароль в форме регистрации")
+    public void fillInPasswordField(String password) {
         driver.findElement(registrationFormPasswordField).clear();
-        driver.findElement(registrationFormPasswordField).sendKeys(user.getPassword());
+        driver.findElement(registrationFormPasswordField).sendKeys(password);
+    }
+
+    @Step("Клик по кнопке Зарегистрироваться")
+    public void clickRegisterButton() {
         driver.findElement(registrationFormRegistrationButton).click();
+    }
+
+    @Step("Заполнение полей формы Регистрации")
+    public void fillInRegistrationDataFields(User user) {
+fillInNameField(user.getName());
+fillInEmailField(user.getEmail());
+fillInPasswordField(user.getPassword());
+clickRegisterButton();
     }
 
     @Step("Проверка текста сообщения об ошибке при некорректном вводе пароля в форме Регистрации")

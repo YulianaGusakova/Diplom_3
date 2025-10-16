@@ -48,6 +48,12 @@ public class UserApiSteps {
                 .post(BASE_URL + ApiEndPoints.USER_LOGIN_POST)
                 .then();
     }
+    @Step("Получения токена пользователя")
+    public String getUserAccessToken(User user) {
+        return loginUser(user)
+                .extract()
+                .path("accessToken");
+    }
 
     @Step("Удаление пользователя")
     public ValidatableResponse deleteUser(User user) {

@@ -17,7 +17,6 @@ public class RegistrationTest extends BaseTest {
     private SignInPage signInPage;
     private RegistrationPage registrationPage;
     private UserApiSteps userApiSteps;
-    private String accessToken;
 
     private final User user = DataGenerator.randomUser();
     private final User userInvalidPassword = DataGenerator.userInvalidPassword();
@@ -28,8 +27,6 @@ public class RegistrationTest extends BaseTest {
         signInPage = new SignInPage(driver);
         registrationPage = new RegistrationPage(driver);
         userApiSteps = new UserApiSteps();
-        accessToken = userApiSteps.createUser(user).extract().path("accessToken");
-
     }
 
     @Test
@@ -57,6 +54,7 @@ public class RegistrationTest extends BaseTest {
 
     @After
     public void clearTestData() {
+        String accessToken = userApiSteps.getUserAccessToken(user);
         if (accessToken != null && user.getAccessToken() != null) {
             try {
                 userApiSteps.deleteUser(user);
