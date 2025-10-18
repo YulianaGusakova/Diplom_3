@@ -24,6 +24,8 @@ public class MainPage {
     private final By saucesMenuItemButton = By.xpath("//div[contains(@class, 'tab_tab__1SPyG')]//span[text()='Соусы']/parent::div");
     private final By fillingsMenuItemButton = By.xpath("//div[contains(@class, 'tab_tab__1SPyG')]//span[text()='Начинки']/parent::div");
     private final By menuContainer = By.cssSelector("BurgerIngredients_ingredients__menuContainer__Xu3Mo");
+    private final By tabText = By.cssSelector("span.text_type_main-default");
+    private final String activeTabClassText = "tab_tab_type_current__2BEPc";
 
     public MainPage(WebDriver driver) {
         this.driver = driver;
@@ -86,12 +88,12 @@ public class MainPage {
         WebElement activeTabElement = wait.until(ExpectedConditions.visibilityOfElementLocated(activeTab));
         // Проверяем, что элемент действительно активный (содержит нужный класс)
         String classAttribute = activeTabElement.getAttribute("class");
-        if (!classAttribute.contains("tab_tab_type_current__2BEPc")) {
+        if (!classAttribute.contains(activeTabClassText)) {
             return false;
         }
 
         // Ищем вложенный span с текстом внутри активного таба
-        WebElement spanElement = activeTabElement.findElement(By.cssSelector("span.text_type_main-default"));
+        WebElement spanElement = activeTabElement.findElement(tabText);
         String displayedText = spanElement.getText().trim();
 
         return displayedText.equals(itemMenuName);
